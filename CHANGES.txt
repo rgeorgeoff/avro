@@ -50,6 +50,8 @@ Trunk (not yet released)
 
     AVRO-1723. Add support for forward declarations in avro IDL (Zoltan Farcas via thiru)
 
+    AVRO-1971: Allow alias annotation on fields (Johannes Schulte via gabor)
+
   BUG FIXES
 
     AVRO-1741: Python3: Fix error when codec is not in the header.
@@ -153,6 +155,12 @@ Trunk (not yet released)
 
     AVRO-1857: GenericDatumWriter.write using BufferedBinaryEncoder leaves ByteBuffer in indeterminate state
     (Nandor Kollar via gabor)
+
+    AVRO-1990: CreateRandomFileTool should validate arguments (Nandor Kollar via gabor)
+
+    AVRO-1401: @Nullable does not work with byte[] (Nandor Kollar via gabor)
+
+    AVRO-1985: Unreleased resources (gabor)
 
 Avro 1.8.1 (14 May 2016)
 
