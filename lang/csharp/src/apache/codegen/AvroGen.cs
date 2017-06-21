@@ -18,6 +18,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Collections;
+using System.Linq;
 
 namespace Avro
 {
@@ -63,20 +66,37 @@ namespace Avro
         }
         static void GenSchema(string infile, string outdir)
         {
-            try
+            List<string> infiles = new List<string> ();
+            if(System.IO.File.Exists(infile)) 
             {
-                string text = System.IO.File.ReadAllText(infile);
-                Schema schema = Schema.Parse(text);
-
-                CodeGen codegen = new CodeGen();
-                codegen.AddSchema(schema);
-
-                codegen.GenerateCode();
-                codegen.WriteTypes(outdir);
+                // This path is a file so just use the single file
+                infiles.Add(infile); 
+            }               
+            else(System.IO.Directory.Exists(infile)) 
+            {
+                Console.WriteLine("we got here?" + infile);
+                // This path is a directory
+                //Console.WriteLine("we got here?" + infile);
+                infiles = System.IO.Directory.GetFiles(infile, "*.avsc").ToList();
             }
-            catch (Exception ex)
+
+            foreach(string file in infiles)
             {
-                Console.WriteLine("Exception occurred. " + ex.Message);
+                try
+                {
+                    string text = System.IO.File.ReadAllText(file);
+                    Schema schema = Schema.Parse(text);
+
+                    CodeGen codegen = new CodeGen();
+                    codegen.AddSchema(schema);
+
+                    codegen.GenerateCode();
+                    codegen.WriteTypes(outdir);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception occurred. " + ex.Message);
+                }
             }
         }
     }
